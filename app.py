@@ -12,14 +12,22 @@ class Client:
         self.output = output
         self.duplicatecheck = duplicatecheck
 
-    def send_quick_SMS(self, to, msg,):
-
+    def send_quick_SMS(self, to: str, msg: str,):
+        """Used to send a quick message to the provided mobile number."""
         send_sms(self.userid, self.password, self.senderid,
                  self.output, self.duplicatecheck, to, msg)
 
-    def send_quick_smartlink_sms(self, to, msg: str, smartLinkTitle):
-        send_smartlink_sms(self.userid, self.password, self.senderid,
-                           self.output, self.duplicatecheck, to, msg, smartLinkTitle)
+    def send_quick_smartlink_sms(self, to: str, msg: str, smartLinkTitle: str):
+        """Used to send a message with a link in it. The link will be shortened and assigned the provided smartlink title."""
+
+        send_sms(self.userid, self.password, self.senderid,
+                 self.output, self.duplicatecheck, to, msg, smartLinkTitle=smartLinkTitle)
+        # send_smartlink_sms(self.userid, self.password, self.senderid,
+        #                    self.output, self.duplicatecheck, to, msg, smartLinkTitle)
+
+    def send_quick_sms_Schedule(self, to: str, msg: str, scheduleTime):
+        send_sms(self.userid, self.password, self.senderid,
+                 self.output, self.duplicatecheck, to, msg, scheduleTime=scheduleTime)
 
 
 zettatel = Client("levin", 'n1xnS9qM',
