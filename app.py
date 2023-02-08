@@ -1,6 +1,9 @@
 import requests
 from messages.resources import send_sms
 import json
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 
 class message:
@@ -18,8 +21,6 @@ class message:
 
         send_sms(self.userid, self.password, self.senderid,
                  self.output, self.duplicatecheck, msg, to=to, smartLinkTitle=smartLinkTitle)
-        # send_smartlink_sms(self.userid, self.password, self.senderid,
-        #                    self.output, self.duplicatecheck, to, msg, smartLinkTitle)
 
     def send_quick_sms_Schedule(self, to: str, msg: str, scheduleTime):
         """Sends a scheduled SMS. 'scheduleTime' argument should be passed for it to work"""
@@ -52,11 +53,3 @@ class Client(message):
         self.senderid = senderid
         self.output = output
         self.duplicatecheck = duplicatecheck
-
-
-zettatel = Client("levin", 'n1xnS9qM', 'ZTSM')
-
-zettatel.send_quick_SMS(
-    '254768850685', "this is test from python package")
-# zettatel.send_quick_smartlink_sms(
-#     '254768850685', 'Get compiled tender edition summary FREE . Register by visiting our website www.makkah.co.ke/tender.php or through our WhatsApp link below. To stop ,dial *456*9*5#', "Samrtlink Title test")
