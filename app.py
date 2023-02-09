@@ -7,12 +7,6 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-# TODO: read senderId
-
-# TODO: Groups
-
-# TODO: Contact
-
 
 class Client:
 
@@ -24,12 +18,14 @@ class Client:
         self.duplicatecheck = duplicatecheck
 
     def get_api_key(self):
+        '''used to read the existing apikey'''
 
         url = f"https://portal.zettatel.com/SMSApi/apikey/read?userid={self.userid}&password={self.password}&output={self.output}"
 
         return send_request(url, "GET")
 
     def create_api_key(self):
+        '''used to create a new apikey'''
 
         response = send_request(
             "https://portal.zettatel.com/SMSApi/apikey/create",
@@ -39,6 +35,7 @@ class Client:
         return response
 
     def api_exist(self):
+        '''Used to check if an APIKEY registered to the account attached is available and if not it creates one .'''
         global apikey
         api = self.get_api_key()
 
@@ -94,6 +91,7 @@ class Client:
     # ***********************GROUP SMS*******************************
 
     def send_group_sms(self, group: str, msg: str):
+        '''used to send group message using the zettatel API'''
 
         try:
             res = send_sms(self.userid, self.password, self.senderid,
@@ -103,6 +101,7 @@ class Client:
             return str(err)
 
     def send_group_scheduled_sms(self, group: str, msg: str, scheduleTime):
+        '''used to send a scheduled froup message'''
 
         try:
             res = send_sms(self.userid, self.password, self.senderid,
@@ -112,6 +111,7 @@ class Client:
             return str(err)
 
     def send_group_smartlink_sms(self, group: str, msg: str, smartLinkTitle):
+        '''used to send group message with smartlink in it'''
         try:
             res = send_sms(self.userid, self.password, self.senderid,
                            self.output, self.duplicatecheck, msg, group=group, smartLinkTitle=smartLinkTitle)
@@ -122,16 +122,22 @@ class Client:
      # **********************SMS DELIVERY STATUS****************************
 
     def delivery_status_by_transactionid(self, transactionid: int):
+        '''used to get delivery status of a particular message using their transaction ID'''
+
         url = f"https://portal.zettatel.com/SMSApi/report/status?userid={self.userid}&password={self.password}&apikey= {self.api_exist()}&output={self.output}&uuid={transactionid}"
 
         return send_request(url, "POST")
 
     def delivery_status_by_summary(self, groupby='date'):
+        '''used to get a summary on message delivery reports'''
+
         url = f"https://portal.zettatel.com/SMSApi/report/smsSummary?userid={self.userid}&password={self.password}&apikey= {self.api_exist()}&groupby={groupby}&output={self.output}"
 
         return send_request(url, "POST")
 
     def delivery_status_by_day(self, date):
+        '''Used to get message delivery reports of the particular date given.'''
+
         url = f"https://portal.zettatel.com/SMSApi/report/day?userid={self.userid}&password={self.password}&apikey= {self.api_exist()}&date={date}&output={self.output}"
 
         return send_request(url, "POST")
@@ -139,4 +145,19 @@ class Client:
      # **********************Sender ID****************************
 
     def get_senderID(self):
-        return send_request("https://portal.zettatel.com/SMSApi/senderid/read?userid=levin&password=n1xnS9qM&output=json", "GET")
+        '''used to get the senderID registered to the account with the provided credentials'''
+        try:
+            res = send_request(
+                "https://portal.zettatel.com/SMSApi/senderid/read?userid=levin&password=n1xnS9qM&output=json", "GET")
+            return res
+
+        except Exception as err:
+            return str(err)
+
+    # ********************** Groups ****************************
+
+    # TODO: Groups
+
+    # ********************** Groups ****************************
+
+    # TODO: Contact
