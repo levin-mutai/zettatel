@@ -1,6 +1,6 @@
 import requests
 import re
-from .utils import is_date
+from .utils import is_date, send_request
 
 
 def send_sms(userid, password,  senderid, output, duplicatecheck, msg: str, **kwargs):

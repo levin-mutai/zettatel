@@ -1,22 +1,20 @@
-from .app import Client
+
+import requests
 
 
-def api_exist():
-    api = Client.get_api_key()
+def send_request(url, method, payload=None, headers=None, file=None):
+    request_body = {}
+    files = {}
+    header = {}
 
-    if api.json()['response']['code'] == "253":
-        try:
+    if payload:
+        request_body.update(payload)
+    if headers:
+        header.update(headers)
+    if file:
+        files.update(file)
 
-            res = Client.create_api_key()
-            if res.json()["response"]["status"] == 'error':
-                raise ValueError(res.json()["response"]["msg"])
+    response = requests.request(
+        method, url, headers=header, data=request_body, files=files)
 
-            else:
-                res = Client.get_api_key()
-                return res.json()['response']['apikeyList']['apikey']
-
-        except Exception as err:
-            return str(err)
-
-    else:
-        return api.json()['response']['apikeyList']['apikey']
+    return response

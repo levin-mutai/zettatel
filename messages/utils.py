@@ -1,3 +1,4 @@
+import requests
 from dateutil.parser import parse
 import re
 
@@ -30,3 +31,21 @@ def is_url(link):
         r'(?::\d+)?'  # optional port
         r'(?:/?|[/?]\S+)$', re.IGNORECASE)
     return re.match(regex, link) is not None
+
+
+def send_request(url, method, payload=None, headers=None, file=None):
+    request_body = {}
+    files = {}
+    header = {}
+
+    if payload:
+        request_body.update(payload)
+    if headers:
+        header.update(headers)
+    if file:
+        files.update(file)
+
+    response = requests.request(
+        method, url, headers=header, data=request_body, files=files)
+
+    return response
