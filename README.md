@@ -9,7 +9,7 @@ An SDK to help send messages through the zettatel API
 to use this package, you can either git clone or install using pip:
 
 ```
-pip install message==0.1.3
+pip install zettatel==0.1.3.1
 ```
 
 This will install all the required packages. Next we need to initialize the packacge as shown below:

@@ -7,8 +7,8 @@ with open("README.md", 'r') as f:
 
 setup(
     name='zettatel',
-    version='0.1.3',
-    description='a python package to help send messages using the Zettatel API',
+    version='0.1.3.1',
+    description='An SDK to help send messages through the zettatel API',
     url='https://github.com/levin-mutai/zettatel',
     author='Levin Mutai',
     author_email='levinmutai2@gmail.com',
