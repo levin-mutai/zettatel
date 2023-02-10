@@ -1,6 +1,6 @@
 import requests
 from messages.resources import send_sms
-from utils import send_request
+from zettatel.utils import send_request
 import json
 import os
 from dotenv import load_dotenv

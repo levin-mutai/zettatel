@@ -1,2 +1,4 @@
 .env
 /env
+/zettatel.egg-info
+/dist

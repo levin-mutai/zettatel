@@ -1,7 +1,8 @@
 
 import os
-from app import Client
+from zettatel.message import Client
 from dotenv import load_dotenv
+
 load_dotenv()
 
 
