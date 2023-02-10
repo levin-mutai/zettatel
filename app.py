@@ -1,6 +1,5 @@
 import requests
 from messages.resources import send_sms
-from API.api import API
 from utils import send_request
 import json
 import os
@@ -156,8 +155,156 @@ class Client:
 
     # ********************** Groups ****************************
 
-    # TODO: Groups
+    def create_group(self):
+        try:
+            pass
+        except Exception as err:
+            return str(err)
 
-    # ********************** Groups ****************************
+    def create_group(self, groupname: str):
+        '''Used to create a text group'''
 
-    # TODO: Contact
+        try:
+            url = "https://portal.zettatel.com/SMSApi/group/create"
+
+            payload = {'userid': self.userid,
+                       'password': self.password,
+                       'groupname': groupname,
+                       'output': self.output}
+
+            response = send_request(url, "POST", payload)
+
+            return response
+
+        except Exception as err:
+            return str(err)
+
+    def get_groups(self):
+        '''used to get all the groups attached to the account'''
+
+        try:
+            res = send_request(
+                f"https://portal.zettatel.com/SMSApi/group/read?userid={self.userid}&password={self.password}&output={self.output}", "GET")
+            return res
+
+        except Exception as err:
+            return str(err)
+
+    def update_group(self, newgroupname: str, groupid: str):
+        '''used to update group name '''
+
+        try:
+            url = "https://portal.zettatel.com/SMSApi/group/update"
+
+            payload = {'userid': self.userid,
+                       'password': self.password,
+                       'groupname': newgroupname,
+                       'id': groupid,
+                       'output': self.output}
+            response = send_request(url, "POST", payload)
+
+            return response
+
+        except Exception as err:
+            return str(err)
+
+    def create_group(self, groupid):
+        '''used to delete a group'''
+
+        try:
+            url = "https://portal.zettatel.com/SMSApi/group/delete"
+
+            payload = {'userid': self.userid,
+                       'password': self.password,
+                       'id': groupid,
+                       'output': self.output}
+            response = send_request(url, "POST", payload)
+
+            return response
+
+        except Exception as err:
+            return str(err)
+
+    # ********************** Cantacts ****************************
+
+    def create_contact(self, contact_name, mobile_number, group_id):
+        '''used to create a new contact in a group'''
+
+        try:
+            url = "https://portal.zettatel.com/SMSApi/contact/create"
+
+            payload = {'userid': self.userid,
+                       'password': self.password,
+                       'contactname': contact_name,
+                       'mobileno': mobile_number,
+                       'groupid': group_id,
+                       'output': 'json'}
+            response = send_request(url, "POST", payload)
+
+            return response
+        except Exception as err:
+            return str(err)
+
+    def update_contact(self, contact_name, mobile_number, group_id):
+        '''used to update an existing contact in a group'''
+
+        try:
+            url = "https://portal.zettatel.com/SMSApi/contact/upload"
+
+            payload = {'userid': self.userid,
+                       'password': self.password,
+                       'contactname': contact_name,
+                       'mobileno': mobile_number,
+                       'groupid': group_id,
+                       'output': 'json'}
+            response = send_request(url, "POST", payload)
+
+            return response
+        except Exception as err:
+            return str(err)
+
+    def get_contact(self, group_name):
+        '''used to get all contacts in a given group'''
+
+        try:
+            response = send_request(
+                f"https://portal.zettatel.com/SMSApi/contact/read?userid={self.userid}&password={self.password}&groupname={group_name}&output=json", "GET")
+
+            return response
+        except Exception as err:
+            return str(err)
+
+    def update_contact(self, contact_name, mobile_number, group_id, contact_id):
+        '''used to update a given contact in a group'''
+
+        try:
+            url = "https://portal.zettatel.com/SMSApi/contact/update"
+
+            payload = {'userid': self.userid,
+                       'password': self.password,
+                       'contactname': contact_name,
+                       'mobileno': mobile_number,
+                       'groupid': group_id,
+                       'id': contact_id,
+                       'output': 'json'}
+            response = send_request(url, "POST", payload)
+
+            return response
+        except Exception as err:
+            return str(err)
+
+    def delete_contact(self, contact_ids: str):
+        '''used to delete a given contact in a group'''
+
+        try:
+            url = "https://portal.zettatel.com/SMSApi/contact/delete"
+
+            payload = {'userid': self.userid,
+                       'password': self.password,
+                       'id': contact_ids,
+                       'output': self.output}
+            response = send_request(url, "POST", payload)
+
+            return response
+        except Exception as err:
+            return str(err)
