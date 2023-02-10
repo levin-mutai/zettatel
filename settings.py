@@ -1,3 +1,3 @@
-from app import Client
+from zettatel.message import Client
 
 apikey = Client.api_exist()
